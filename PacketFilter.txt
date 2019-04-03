@@ -1,0 +1,21 @@
+iptables -A INPUT -i enp9s0 -s 10.2.0.0/16 -p icmp -j DROP
+iptables -A FORWARD -i en9s0 -s 10.2.0.0/16 -p icmp -j DROP
+iptables -A INPUT -i ens1 -s 10.1.0.3 -p icmp -j DROP
+iptables -A FORWARD -i ens1 -s 10.0.3 -p icp -j DROP
+iptables -A INPUT -i ens1 -p tcp -m tcp --dport 22 -s 10.1.0.8/29 -m conntrack --ctstate NEW -j DROP
+iptables -A INPUT -p udp --dport 514 -j DROP
+iptables -A FORWARD -p udp --dport 514 -j DROP
+iptables -A FORWARD -s 10.0.0.0/8 -d 10.0.0.0/8 -j ACCEPT
+iptables -A FORWARD -j DROP
+iptables -A INPUT -s 10.1.0.3 -i ens1 -p tcp -m tcp --dport 443 -j REJECT
+iptables -L
+iptables -A INPUT -p tcp -m tcp --dport 443 -m connlimit --connlimit-above 2 -j DROP
+iptables -I INPUT ! -s 127.0.0.1 -p tcp -m tcp --dport 79 -j DROP
+iptables -A INPUT -i ens1 -p tcp -m tcp --dport 22 -s 10.1.0.8/29 -m conntrack --ctstate NEW -j DROP
+iptables -A INPUT -s 127.0.0.0/8 ! -i lo -j DROP
+iptables -I FORWARD 1 -p udp -m udp --dport 53 -d 10.1,0.98 -j ACCEPT
+iptables -I FORWARD 2 -p udp -m udp --dport 53 -d 167.206.112.138 -j ACCEPT
+iptables -I FORWARD 3 -p udp -m udp --dport 53 -j DROP
+iptables -I INPUT -p tcp -m tcp --dport 443 -m conntrack --ctstate NEW -j LOG --log-prefix="IPTABLES LOG:"
+
+
