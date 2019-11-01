@@ -1,0 +1,126 @@
+active.c: In function ‘active’:
+active.c:46:47: warning: passing argument 3 of ‘getsockname’ makes pointer from integer without a cast [-Wint-conversion]
+  getsockname(ufd, (struct sockaddr*) &myaddr, sizeof(myaddr));
+                                               ^~~~~~
+In file included from active.c:6:0:
+/usr/include/x86_64-linux-gnu/sys/socket.h:116:12: note: expected ‘socklen_t * restrict {aka unsigned int * restrict}’ but argument is of type ‘long unsigned int’
+ extern int getsockname (int __fd, __SOCKADDR_ARG __addr,
+            ^~~~~~~~~~~
+active.c:54:13: warning: passing argument 2 of ‘write’ makes pointer from integer without a cast [-Wint-conversion]
+  write(dfd, myaddr.sin_port, 2);
+             ^~~~~~
+In file included from active.c:2:0:
+/usr/include/unistd.h:369:16: note: expected ‘const void *’ but argument is of type ‘in_port_t {aka short unsigned int}’
+ extern ssize_t write (int __fd, const void *__buf, size_t __n) __wur;
+                ^~~~~
+active.c:55:13: warning: passing argument 2 of ‘write’ makes pointer from integer without a cast [-Wint-conversion]
+  write(dfd, inet_addr(peer_ip), 4);
+             ^~~~~~~~~
+In file included from active.c:2:0:
+/usr/include/unistd.h:369:16: note: expected ‘const void *’ but argument is of type ‘in_addr_t {aka unsigned int}’
+ extern ssize_t write (int __fd, const void *__buf, size_t __n) __wur;
+                ^~~~~
+active.c:57:16: warning: passing argument 2 of ‘readfully’ makes pointer from integer without a cast [-Wint-conversion]
+  readfully(dfd,seq, 4);
+                ^~~
+active.c:15:6: note: expected ‘void *’ but argument is of type ‘int’
+ void readfully(int server_fd, void* addr, int size)
+      ^~~~~~~~~
+active.c:58:6: error: ‘peerport’ undeclared (first use in this function); did you mean ‘peer_port’?
+  if (peerport == 0)
+      ^~~~~~~~
+      peer_port
+active.c:58:6: note: each undeclared identifier is reported only once for each function it appears in
+active.c:64:39: error: ‘peerip’ undeclared (first use in this function); did you mean ‘peer_ip’?
+  peeraddr.sin_addr.s_addr = inet_addr(peerip);
+                                       ^~~~~~
+                                       peer_ip
+active.c:71:41: error: expected expression before ‘struct’
+  ret = sendto(ufd, send_buf, BUFSIZE,0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+                                         ^~~~~~
+active.c:71:38: error: called object is not a function or function pointer
+  ret = sendto(ufd, send_buf, BUFSIZE,0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+                                      ^
+active.c:71:70: warning: passing argument 5 of ‘sendto’ makes pointer from integer without a cast [-Wint-conversion]
+  ret = sendto(ufd, send_buf, BUFSIZE,0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+                                                                      ^~~~~~
+In file included from active.c:6:0:
+/usr/include/x86_64-linux-gnu/sys/socket.h:152:16: note: expected ‘const struct sockaddr *’ but argument is of type ‘long unsigned int’
+ extern ssize_t sendto (int __fd, const void *__buf, size_t __n,
+                ^~~~~~
+active.c:71:8: error: too few arguments to function ‘sendto’
+  ret = sendto(ufd, send_buf, BUFSIZE,0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+        ^~~~~~
+In file included from active.c:6:0:
+/usr/include/x86_64-linux-gnu/sys/socket.h:152:16: note: declared here
+ extern ssize_t sendto (int __fd, const void *__buf, size_t __n,
+                ^~~~~~
+active.c:72:74: warning: passing argument 6 of ‘recvfrom’ makes pointer from integer without a cast [-Wint-conversion]
+  ret = recvfrom(ufd, recv_buf, BUFSIZE, 0, (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+                                                                          ^~~~~~
+In file included from active.c:6:0:
+/usr/include/x86_64-linux-gnu/sys/socket.h:163:16: note: expected ‘socklen_t * restrict {aka unsigned int * restrict}’ but argument is of type ‘long unsigned int’
+ extern ssize_t recvfrom (int __fd, void *__restrict __buf, size_t __n,
+                ^~~~~~~~
+active.c:73:26: error: expected ‘)’ before ‘recv_buf’
+  int client_seq = *(int* recv_buf);
+                          ^~~~~~~~
+active.c:73:35: error: expected expression before ‘;’ token
+  int client_seq = *(int* recv_buf);
+                                   ^
+active.c:79:21: warning: implicit declaration of function ‘nthol’; did you mean ‘ntohl’? [-Wimplicit-function-declaration]
+  int expected_seq = nthol(seq) + 1;
+                     ^~~~~
+                     ntohl
+active.c:80:23: error: expected ‘)’ before ‘!’ token
+  if(ntohl(client_seq) ! = expected_seq)
+                       ^
+active.c:82:62: error: ‘client’ undeclared (first use in this function); did you mean ‘creat’?
+   printf("Got message with seq: %d but expected seq: %d!\n", client seq, expected_seq);
+                                                              ^~~~~~
+                                                              creat
+active.c:82:69: error: expected ‘)’ before ‘seq’
+   printf("Got message with seq: %d but expected seq: %d!\n", client seq, expected_seq);
+                                                                     ^~~
+active.c:85:2: warning: implicit declaration of function ‘prtintf’; did you mean ‘printf’? [-Wimplicit-function-declaration]
+  prtintf("seq=%d %s\n", nthol(client_seq), recv_buf+4);
+  ^~~~~~~
+  printf
+active.c:88:2: error: expected ‘;’ before ‘seq’
+  seq = htonl(seq);
+  ^~~
+active.c:89:10: error: expected expression before ‘)’ token
+  *((int*)) send_buf = seq;
+          ^
+active.c:90:10: warning: passing argument 1 of ‘sprintf’ makes pointer from integer without a cast [-Wint-conversion]
+  sprintf(seq+4,"Who are you and what do you want?!");
+          ^~~
+In file included from active.c:1:0:
+/usr/include/stdio.h:320:12: note: expected ‘char * restrict’ but argument is of type ‘int’
+ extern int sprintf (char *__restrict __s,
+            ^~~~~~~
+active.c:91:42: error: expected expression before ‘struct’
+  ret = sendto(ufd, send_buf, BUFSIZE, 0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+                                          ^~~~~~
+active.c:91:39: error: called object is not a function or function pointer
+  ret = sendto(ufd, send_buf, BUFSIZE, 0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+                                       ^
+active.c:91:71: warning: passing argument 5 of ‘sendto’ makes pointer from integer without a cast [-Wint-conversion]
+  ret = sendto(ufd, send_buf, BUFSIZE, 0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+                                                                       ^~~~~~
+In file included from active.c:6:0:
+/usr/include/x86_64-linux-gnu/sys/socket.h:152:16: note: expected ‘const struct sockaddr *’ but argument is of type ‘long unsigned int’
+ extern ssize_t sendto (int __fd, const void *__buf, size_t __n,
+                ^~~~~~
+active.c:91:8: error: too few arguments to function ‘sendto’
+  ret = sendto(ufd, send_buf, BUFSIZE, 0 (struct sockaddr*) &peeraddr, sizeof(peeraddr));
+        ^~~~~~
+In file included from active.c:6:0:
+/usr/include/x86_64-linux-gnu/sys/socket.h:152:16: note: declared here
+ extern ssize_t sendto (int __fd, const void *__buf, size_t __n,
+                ^~~~~~
+active.c: In function ‘main’:
+active.c:102:3: warning: implicit declaration of function ‘passive’; did you mean ‘active’? [-Wimplicit-function-declaration]
+   passive(argv[1], argv[2]);
+   ^~~~~~~
+   active

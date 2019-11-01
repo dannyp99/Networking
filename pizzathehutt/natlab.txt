@@ -1,0 +1,11 @@
+iptables -F
+iptables -F -t nat
+iptables -t nat -A PREROUTING -p udp --dport 53 \! -d 167.206.112.138 -j DNAT --to 167.206.112.138
+iptables -t nat -A PREROUTING -d 1
+
+5. iptables -t nat -A PREROUTING -p tcp -d www.hofstra.edu -j DNAT --to 10.1.0.7:19998 
+   iptables -t nat -A POSTROUTING -p tcp -s 10.1.0.7 --sport 19998 -j SNAT --to www.hofstra.edu:80
+
+7a. iptables -A INPUT -p tcp -s 10.2.0.0/16 --dport 1:1023 -m conntrack --ctstate NEW -j DROP
+
+7b. iptables -t nat -A PREROUTING -p tcp --dport 5000 -j REDIRECT --to-port 22

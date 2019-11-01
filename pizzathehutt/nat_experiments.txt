@@ -1,0 +1,24 @@
+NAT Lab part 2.2 experiments
+
+1. Our side: ./udpsend 5000 10.1.0.x 6000
+   ./udprecv 5000 
+   Their side: ./udpsend 6000 10.1.0.x 5000
+   ./udprecv 6000
+   If conntrack detects a connection, then PRCN must be in use.
+2. Our side: ./upsend 2000 10.1.0.x 6000
+   ./udprecv 5000
+   Their side: ./udpsend 7000 10.1.0.7 5000
+   ./udprecv 6000
+   If this creates a connection according to conntrack, then non-port RCN is being used. 
+3. our side:
+   ./udpsend 4000 10.1.0.x 6000
+   ./udpsend 4000 10.1.0.x 5000
+   ./udprecv 4000
+   Their side:
+	./udprecv 6000
+  	./udprecv 5000
+	./udpsend 6000 10.1.0.7 4000
+	./udpsend 5000 10.1.0.7 4000
+   If conntrack only shows a single connection with the other IP, then Symmetric NAT is in use, because otherwise there should be two connections.
+
+ 
